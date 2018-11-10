@@ -257,16 +257,16 @@ public class Main extends javax.swing.JFrame {
 
     
     private String getSizeFormatted(long length){
-        if(length <= 1000L){
+        if(length <= 1024L){
             return String.valueOf(length) + " B";
-        }else if(length <= 1000000L){
-            return getDoubleFormat((double) length / 1000d) + " KB";
-        }else if(length <= 1000000000L){
-            return getDoubleFormat((double) length / 1000000d) + " MB";
-        }else if(length <= 1000000000000L){
-            return getDoubleFormat((double) length / 1000000000d) + " GB";
-        }else if(length <= 1000000000000000L){
-            return getDoubleFormat((double) length / 1000000000000d) + " TB";
+        }else if(((double) length / 1024d) <= 1024L){
+            return getDoubleFormat((double) length / 1024d) + " KB";
+        }else if(((double) length / 1024d / 1024d) <= 1024L){
+            return getDoubleFormat((double) length / 1024d / 1024d) + " MB";
+        }else if(((double) length / 1024d / 1024d / 1024d) <= 1024L){
+            return getDoubleFormat((double) length / 1024d / 1024d / 1024d) + " GB";
+        }else if(((double) length / 1024d / 1024d / 1024d / 1024d) <= 1024L){
+            return getDoubleFormat((double) length / 1024d / 1024d / 1024d / 1024d) + " TB";
         }else{
             return "unspecified " + length + " bytes";
         }
