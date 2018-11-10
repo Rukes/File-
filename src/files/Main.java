@@ -58,13 +58,14 @@ public class Main extends javax.swing.JFrame {
         sizeLabel = new javax.swing.JLabel();
         openButton = new javax.swing.JButton();
         authorLabel = new javax.swing.JLabel();
+        openParentFolderButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("File+");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setFocusCycleRoot(false);
         setFocusable(false);
-        setMinimumSize(new java.awt.Dimension(466, 359));
+        setMinimumSize(new java.awt.Dimension(466, 376));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pathLabel.setText("Path");
@@ -103,7 +104,7 @@ public class Main extends javax.swing.JFrame {
                 closeButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(closeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 280, 90, -1));
+        getContentPane().add(closeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 290, 90, -1));
 
         clearButton.setText("Clear");
         clearButton.setToolTipText("Clear information screen & path input row");
@@ -145,14 +146,23 @@ public class Main extends javax.swing.JFrame {
                 openButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(openButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 280, 90, -1));
+        getContentPane().add(openButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 290, 90, -1));
 
         authorLabel.setText("author");
         getContentPane().add(authorLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, 320, 20));
 
+        openParentFolderButton.setText("Open folder");
+        openParentFolderButton.setToolTipText("Open parent folder of file");
+        openParentFolderButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                openParentFolderButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(openParentFolderButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 290, 90, -1));
+
         getAccessibleContext().setAccessibleDescription("");
 
-        setBounds(0, 0, 466, 359);
+        setBounds(0, 0, 466, 376);
     }// </editor-fold>//GEN-END:initComponents
 
     private void filePathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filePathActionPerformed
@@ -209,6 +219,34 @@ public class Main extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_openButtonActionPerformed
+
+    private void openParentFolderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openParentFolderButtonActionPerformed
+        if(!Desktop.isDesktopSupported()){
+            System.out.println("Desktop is not supported!");
+            return;
+        }
+        String path = filePath.getText();
+        if(path == null || path.isEmpty()){
+            JOptionPane.showMessageDialog(null, "There is nothing to show.", "Empty input", JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        File file = new File(path);
+        if(file.exists()){
+            try {
+                if(file.isDirectory()){
+                    Desktop.getDesktop().open(file);
+                }else{
+                    Desktop.getDesktop().open(file.getParentFile());
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "An error occured while opening file...", "Error!", JOptionPane.ERROR_MESSAGE);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Folder does not exist!", "Error!", JOptionPane.ERROR_MESSAGE);
+            clear();
+        }
+    }//GEN-LAST:event_openParentFolderButtonActionPerformed
 
     private void showInfo(){
         String path = filePath.getText();
@@ -342,6 +380,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel lastChangeLabel;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JButton openButton;
+    private javax.swing.JButton openParentFolderButton;
     private javax.swing.JLabel pathLabel;
     private javax.swing.JLabel permissionsLabel;
     private javax.swing.JLabel readPermissionLabel;
