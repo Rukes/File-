@@ -198,6 +198,7 @@ public class Main extends javax.swing.JFrame {
     private void openButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openButtonActionPerformed
         if(!Desktop.isDesktopSupported()){
             System.out.println("Desktop is not supported!");
+            JOptionPane.showMessageDialog(null, "This function is not supported!", "Not supported!", JOptionPane.ERROR_MESSAGE);
             return;
         }
         String path = filePath.getText();
@@ -223,6 +224,7 @@ public class Main extends javax.swing.JFrame {
     private void openParentFolderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openParentFolderButtonActionPerformed
         if(!Desktop.isDesktopSupported()){
             System.out.println("Desktop is not supported!");
+            JOptionPane.showMessageDialog(null, "This function is not supported!", "Not supported!", JOptionPane.ERROR_MESSAGE);
             return;
         }
         String path = filePath.getText();
